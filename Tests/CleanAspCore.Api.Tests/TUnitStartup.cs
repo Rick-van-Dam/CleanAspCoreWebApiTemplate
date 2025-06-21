@@ -3,6 +3,7 @@ using CleanAspCore.Data;
 using CleanAspCore.TestUtils.DataBaseSetup;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TUnit.Core;
 using TUnit.Core.Interfaces;
 
 [assembly: ClassConstructor<DependencyInjectionClassConstructor>]
@@ -16,14 +17,16 @@ public class DependencyInjectionClassConstructor : IClassConstructor, ITestEndEv
 
     private AsyncServiceScope _scope;
 
-    public T Create<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>(ClassConstructorMetadata classConstructorMetadata)
-        where T : class
+    public object Create(Type type, ClassConstructorMetadata classConstructorMetadata)
     {
         _scope = _serviceProvider.CreateAsyncScope();
-        return ActivatorUtilities.GetServiceOrCreateInstance<T>(_scope.ServiceProvider);
+        return ActivatorUtilities.GetServiceOrCreateInstance(_scope.ServiceProvider, type);
     }
 
-    public ValueTask OnTestEnd(TestContext testContext) => _scope.DisposeAsync();
+    public ValueTask OnTestEnd(AfterTestContext afterTestContext)
+    {
+        return ValueTask.CompletedTask;
+    }
 
     private static ServiceProvider CreateServiceProvider() =>
         new ServiceCollection()
