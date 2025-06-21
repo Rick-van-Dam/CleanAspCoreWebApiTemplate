@@ -55,9 +55,11 @@ public static class OpenApiExtensions
         app.MapScalarApiReference(options =>
         {
             options.AddPreferredSecuritySchemes("AzureAd");
-            options.AddClientCredentialsFlow("AzureAd", flow =>
+            options.AddAuthorizationCodeFlow("AzureAd", flow =>
             {
-                flow.TokenUrl = $"https://login.microsoftonline.com/{config.TenantId}/oauth2/v2.0/token";
+                flow.ClientId = config.ClientId;
+                flow.SelectedScopes = [$"api://{config.ClientId}/default"];
+                flow.Pkce = Pkce.Sha256;
             });
 
             var devToken = app.Configuration.GetValue<string>("DevToken");
