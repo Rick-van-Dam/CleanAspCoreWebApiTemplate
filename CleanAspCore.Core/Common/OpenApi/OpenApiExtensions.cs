@@ -54,17 +54,18 @@ public static class OpenApiExtensions
 
         app.MapScalarApiReference(options =>
         {
-            options.WithPreferredScheme("AzureAd");
-            options.WithOAuth2Authentication(oauth2Options =>
+            options.AddPreferredSecuritySchemes("AzureAd");
+            options.AddAuthorizationCodeFlow("AzureAd", flow =>
             {
-                oauth2Options.ClientId = config.ClientId;
-                oauth2Options.Scopes = [$"api://{config.ClientId}/default"];
+                flow.ClientId = config.ClientId;
+                flow.SelectedScopes = [$"api://{config.ClientId}/default"];
+                flow.Pkce = Pkce.Sha256;
             });
 
             var devToken = app.Configuration.GetValue<string>("DevToken");
             if (!string.IsNullOrEmpty(devToken))
             {
-                options.WithHttpBearerAuthentication(httpBearerOptions =>
+                options.AddHttpAuthentication("HttpBearer", httpBearerOptions =>
                 {
                     httpBearerOptions.Token = devToken;
                 });
