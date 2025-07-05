@@ -8,9 +8,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
     <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" />
-    <PackageReference Include="TUnit" />
     <PackageReference Include="Refit" />
     <PackageReference Include="Aspire.Hosting.Testing" />
+    <PackageReference Include="xunit.v3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CleanAspCore.Api\CleanAspCore.Api.csproj" />

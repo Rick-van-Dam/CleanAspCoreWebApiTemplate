@@ -1,45 +1,46 @@
 ﻿using CleanAspCore.Core.Data;
 using CleanAspCore.TestUtils.DataBaseSetup;
+using DotNet.Testcontainers.Containers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Testcontainers.MsSql;
+using Xunit;
 
 namespace CleanAspCore.Api.Tests.Data;
 
-internal sealed class MigrationTests(MsSqlContainer databaseContainer, ILogger<MigrationTests> logger)
+public sealed class MigrationTests(MsSqlContainer databaseContainer, ILogger<MigrationTests> logger)
 {
-    public static IEnumerable<Func<MigrationScript>> MigrationTestCases()
+    public static TheoryData<MigrationScript> MigrationTestCases()
     {
         using DbContext context = new HrContext();
-        var migrations = context.GenerateMigrationScripts();
-
-        foreach (var migration in migrations)
-        {
-            yield return () => migration;
-        }
+        return new(context.GenerateMigrationScripts());
     }
 
-    [Test]
-    [MethodDataSource(nameof(MigrationTestCases))]
-    [NotInParallel("MigrationsTest")]
+    [Theory]
+    [MemberData(nameof(MigrationTestCases))]
     public async Task MigrationsUpAndDown_NoErrors(MigrationScript migration)
     {
         var databaseName = "MigrationsTest";
         await databaseContainer.CreateDatabase(databaseName);
         var migrator = new SqlMigrator(databaseContainer, logger, databaseName);
         var upResult = await migrator.Up(migration);
-        await Assert.That(upResult.ExitCode).IsEqualTo(0).Because($"Error during migration up: {upResult.Stderr}");
+        AssertMigrationResult(upResult);
         var downResult = await migrator.Down(migration);
-        await Assert.That(downResult.ExitCode).IsEqualTo(0).Because($"Error during migration down: {downResult.Stderr}");
+        AssertMigrationResult(downResult);
         var upResult2 = await migrator.Up(migration);
-        await Assert.That(upResult2.ExitCode).IsEqualTo(0).Because($"Error during migration up2: {upResult2.Stderr}");
+        AssertMigrationResult(upResult2);
     }
 
-    [Test]
+    private static void AssertMigrationResult(ExecResult result)
+    {
+        Assert.True(result.ExitCode == 0, $"Error during migration: {result.Stderr}");
+    }
+
+    [Fact]
     public async Task ModelShouldNotHavePendingModelChanges()
     {
         await using DbContext context = new HrContext();
         var hasPendingModelChanges = context.Database.HasPendingModelChanges();
-        await Assert.That(hasPendingModelChanges).IsFalse();
+        Assert.False(hasPendingModelChanges);
     }
 }
