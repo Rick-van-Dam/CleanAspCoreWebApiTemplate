@@ -12,6 +12,7 @@ Some features in this template:
 - Ready for [OpenTelemetry](https://opentelemetry.io/)
 - Launchprofile for [dotnet watch](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-watch)
 - Automated build using github actions that checks code formatting, builds and runs the tests.
+- .NET Aspire
 
 ## Running tests
 
@@ -24,7 +25,7 @@ dotnet test
 
 ## Running the app
 
-1. First generate a jwt that you can use for local testing:
+1. First generate a jwt that you can use for local testing by running the following command in the `CleanAspCore.Api` directory:
 
 ```cmd
 dotnet user-jwts create --role "read" --role "write"
@@ -32,5 +33,10 @@ dotnet user-jwts create --role "read" --role "write"
 
 NOTE: The jobs and department endpoints only require authentication but the employee endpoints require that you have the correct claims in the jwt token.
 
-2. Run the database using the provided docker-compose.yaml. Optionally also run the aspire dashboard in the compose file to easily see OpenTelemetry output.
-3. Run the app. You can explore the endpoints using swagger at `https://localhost:7162/swagger`.
+2. Run the `CleanAspCore.AppHost` project. You can do this by running the following command in the `CleanAspCore.AppHost` directory:
+
+```cmd
+dotnet run
+```
+
+3. The url of the Aspire dashboard will be printed and from there you can navigate easily to the other services.
