@@ -12,6 +12,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CleanAspCore.Core\CleanAspCore.Core.csproj" />
-    <ProjectReference Include="..\CleanAspCore.ServiceDefaults\CleanAspCore.ServiceDefaults.csproj" />
   </ItemGroup>
 </Project>

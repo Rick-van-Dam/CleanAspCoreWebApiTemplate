@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using OpenTelemetry;
 
-namespace CleanAspCore.ServiceDefaults.Telemetry;
+namespace CleanAspCore.Core.Common.Telemetry;
 
 internal sealed class EnrichSpanProcessor : BaseProcessor<Activity>
 {
