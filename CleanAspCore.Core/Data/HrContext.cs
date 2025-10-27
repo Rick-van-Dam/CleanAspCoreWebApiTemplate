@@ -5,7 +5,7 @@ using CleanAspCore.Core.Data.Models.Weapons;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace CleanAspCore.Data;
+namespace CleanAspCore.Core.Data;
 
 public sealed class HrContext : DbContext
 {

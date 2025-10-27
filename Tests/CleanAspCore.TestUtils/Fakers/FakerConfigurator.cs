@@ -1,5 +1,5 @@
 ﻿using Bogus;
 
-namespace CleanAspCore.Api.TestUtils.Fakers;
+namespace CleanAspCore.TestUtils.Fakers;
 
 public delegate Faker<T> FakerConfigurator<T>(Faker<T> t) where T : class;

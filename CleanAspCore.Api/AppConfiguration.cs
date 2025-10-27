@@ -2,7 +2,7 @@
 using CleanAspCore.Api.Endpoints.Employees;
 using CleanAspCore.Api.Endpoints.Jobs;
 using CleanAspCore.Api.Endpoints.Weapons;
-using CleanAspCore.Data.Extensions;
+using CleanAspCore.Core.Data.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Identity.Web;

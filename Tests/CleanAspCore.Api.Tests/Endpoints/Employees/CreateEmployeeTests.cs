@@ -1,5 +1,7 @@
 ﻿using CleanAspCore.Api.Endpoints.Employees;
 using CleanAspCore.Api.Tests.Fakers;
+using CleanAspCore.TestUtils;
+using CleanAspCore.TestUtils.Fakers;
 
 namespace CleanAspCore.Api.Tests.Endpoints.Employees;
 

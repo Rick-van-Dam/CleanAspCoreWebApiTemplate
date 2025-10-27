@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
+using CleanAspCore.Core.Data;
 using CleanAspCore.Core.Data.Models.Weapons;
-using CleanAspCore.Data;
 
 namespace CleanAspCore.Api.Endpoints.Weapons;
 

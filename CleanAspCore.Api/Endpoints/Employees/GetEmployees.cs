@@ -1,6 +1,6 @@
 ﻿using CleanAspCore.Core.Common.Paging;
+using CleanAspCore.Core.Data;
 using CleanAspCore.Core.Data.Models.Employees;
-using CleanAspCore.Data;
 
 namespace CleanAspCore.Api.Endpoints.Employees;
 

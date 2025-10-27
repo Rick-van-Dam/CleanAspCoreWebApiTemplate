@@ -1,5 +1,5 @@
-﻿using CleanAspCore.Core.Data.Models.Jobs;
-using CleanAspCore.Data;
+﻿using CleanAspCore.Core.Data;
+using CleanAspCore.Core.Data.Models.Jobs;
 
 namespace CleanAspCore.Api.Endpoints.Jobs;
 

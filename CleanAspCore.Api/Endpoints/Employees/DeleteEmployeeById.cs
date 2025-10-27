@@ -1,4 +1,4 @@
-﻿using CleanAspCore.Data;
+﻿using CleanAspCore.Core.Data;
 
 namespace CleanAspCore.Api.Endpoints.Employees;
 

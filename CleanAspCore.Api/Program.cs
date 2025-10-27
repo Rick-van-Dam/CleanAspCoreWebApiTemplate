@@ -1,14 +1,13 @@
 using System.Reflection;
 using CleanAspCore.Api;
 using CleanAspCore.Api.Common.ErrorHandling;
+using CleanAspCore.Core;
 using CleanAspCore.Core.Common.OpenApi;
-using CleanAspCore.Data;
 using CleanAspCore.ServiceDefaults;
 using Microsoft.AspNetCore.Routing.Constraints;
 
 var builder = WebApplication.CreateSlimBuilder(args);
-builder.Services.Configure<RouteOptions>(
-    options => options.SetParameterPolicy<RegexInlineRouteConstraint>("regex"));
+builder.Services.Configure<RouteOptions>(options => options.SetParameterPolicy<RegexInlineRouteConstraint>("regex"));
 
 builder.AddOpenApiServices<CleanAspCore.Api.Program>(AppJsonSerializerContext.Default);
 builder.AddAuthServices();
@@ -17,7 +16,7 @@ builder.AddServiceDefaults();
 builder.AddExceptionHandlers();
 builder.Services.AddHttpClient();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true);
-builder.AddSqlServerDbContext<HrContext>(HrContext.ConnectionStringName);
+builder.AddStandardAppServices();
 
 builder.Configuration.AddJsonFile("appsettings.Local.json", true);
 builder.Services.ConfigureHttpJsonOptions(options =>

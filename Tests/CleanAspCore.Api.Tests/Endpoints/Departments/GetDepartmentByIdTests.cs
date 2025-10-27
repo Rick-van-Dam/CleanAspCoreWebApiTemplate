@@ -1,4 +1,6 @@
-﻿namespace CleanAspCore.Api.Tests.Endpoints.Departments;
+﻿using CleanAspCore.TestUtils.Fakers;
+
+namespace CleanAspCore.Api.Tests.Endpoints.Departments;
 
 internal sealed class GetDepartmentByIdTests(TestWebApi sut)
 {

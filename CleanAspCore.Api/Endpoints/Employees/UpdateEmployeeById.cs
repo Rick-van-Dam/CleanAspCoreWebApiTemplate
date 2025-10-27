@@ -1,7 +1,7 @@
 ﻿using CleanAspCore.Core.Common.NullableValidation;
 using CleanAspCore.Core.Common.SetProperty;
+using CleanAspCore.Core.Data;
 using CleanAspCore.Core.Data.Models.Employees;
-using CleanAspCore.Data;
 using NotFound = Microsoft.AspNetCore.Http.HttpResults.NotFound;
 
 namespace CleanAspCore.Api.Endpoints.Employees;

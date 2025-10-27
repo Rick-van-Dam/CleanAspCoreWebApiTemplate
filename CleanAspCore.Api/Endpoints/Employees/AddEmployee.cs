@@ -1,8 +1,8 @@
 ﻿using CleanAspCore.Core.Common.EntityShouldExistValidation;
 using CleanAspCore.Core.Common.NullableValidation;
 using CleanAspCore.Core.Common.ValueObjects;
+using CleanAspCore.Core.Data;
 using CleanAspCore.Core.Data.Models.Employees;
-using CleanAspCore.Data;
 
 namespace CleanAspCore.Api.Endpoints.Employees;
 
