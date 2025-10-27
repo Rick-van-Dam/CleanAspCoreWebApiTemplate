@@ -1,10 +1,8 @@
 using System.Reflection;
 using CleanAspCore.Api;
 using CleanAspCore.Api.Common.ErrorHandling;
-using CleanAspCore.Core.Common.Identity;
+using CleanAspCore.Core;
 using CleanAspCore.Core.Common.OpenApi;
-using CleanAspCore.Core.Data;
-using CleanAspCore.Core.Data.Extensions;
 using CleanAspCore.ServiceDefaults;
 using Microsoft.AspNetCore.Routing.Constraints;
 
@@ -18,9 +16,7 @@ builder.AddServiceDefaults();
 builder.AddExceptionHandlers();
 builder.Services.AddHttpClient();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true);
-builder.Services.AddMemoryCache();
-builder.AddDataServices();
-builder.AddIdentityServices();
+builder.AddStandardAppServices();
 
 builder.Configuration.AddJsonFile("appsettings.Local.json", true);
 builder.Services.ConfigureHttpJsonOptions(options =>
