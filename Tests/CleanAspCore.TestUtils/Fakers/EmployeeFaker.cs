@@ -2,7 +2,7 @@
 using CleanAspCore.Core.Common.ValueObjects;
 using CleanAspCore.Core.Data.Models.Employees;
 
-namespace CleanAspCore.Api.TestUtils.Fakers;
+namespace CleanAspCore.TestUtils.Fakers;
 
 public sealed class EmployeeFaker : Faker<Employee>
 {

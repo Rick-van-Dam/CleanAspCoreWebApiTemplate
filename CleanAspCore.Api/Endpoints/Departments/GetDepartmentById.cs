@@ -1,5 +1,5 @@
-﻿using CleanAspCore.Core.Data.Models.Departments;
-using CleanAspCore.Data;
+﻿using CleanAspCore.Core.Data;
+using CleanAspCore.Core.Data.Models.Departments;
 
 namespace CleanAspCore.Api.Endpoints.Departments;
 

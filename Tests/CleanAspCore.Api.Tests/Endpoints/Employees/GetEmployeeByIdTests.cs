@@ -1,4 +1,6 @@
-﻿namespace CleanAspCore.Api.Tests.Endpoints.Employees;
+﻿using CleanAspCore.TestUtils.Fakers;
+
+namespace CleanAspCore.Api.Tests.Endpoints.Employees;
 
 internal sealed class GetEmployeeByIdTests(TestWebApi sut)
 {

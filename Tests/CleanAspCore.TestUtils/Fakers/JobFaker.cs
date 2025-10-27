@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using CleanAspCore.Core.Data.Models.Jobs;
 
-namespace CleanAspCore.Api.TestUtils.Fakers;
+namespace CleanAspCore.TestUtils.Fakers;
 
 public sealed class JobFaker : Faker<Job>
 {

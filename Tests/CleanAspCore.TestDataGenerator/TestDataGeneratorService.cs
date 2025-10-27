@@ -1,6 +1,6 @@
-﻿using CleanAspCore.Api.TestUtils.Fakers;
-using CleanAspCore.Data;
-using CleanAspCore.Data.Extensions;
+﻿using CleanAspCore.Core.Data;
+using CleanAspCore.Core.Data.Extensions;
+using CleanAspCore.TestUtils.Fakers;
 using Microsoft.Extensions.Hosting;
 
 namespace CleanAspCore.TestDataGenerator;

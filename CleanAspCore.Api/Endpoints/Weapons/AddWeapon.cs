@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using CleanAspCore.Core.Common.NullableValidation;
+using CleanAspCore.Core.Data;
 using CleanAspCore.Core.Data.Models.Weapons;
-using CleanAspCore.Data;
 
 namespace CleanAspCore.Api.Endpoints.Weapons;
 

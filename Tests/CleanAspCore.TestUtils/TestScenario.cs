@@ -1,4 +1,4 @@
-﻿namespace CleanAspCore.Api.TestUtils;
+﻿namespace CleanAspCore.TestUtils;
 
 public sealed record TestScenario<TInput>
 {

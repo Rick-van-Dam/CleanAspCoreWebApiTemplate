@@ -1,8 +1,7 @@
-﻿using CleanAspCore.Data;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace CleanAspCore.Core.Data;
+namespace CleanAspCore.Core.Data.Extensions;
 
 public static class HostBuilderExtensions
 {

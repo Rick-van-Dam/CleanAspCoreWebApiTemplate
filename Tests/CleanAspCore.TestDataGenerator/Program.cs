@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using CleanAspCore.Data;
-using CleanAspCore.Data.Extensions;
+using CleanAspCore.Core.Data;
+using CleanAspCore.Core.Data.Extensions;
 using CleanAspCore.TestDataGenerator;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

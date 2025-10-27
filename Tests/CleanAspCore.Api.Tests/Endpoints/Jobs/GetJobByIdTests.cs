@@ -1,4 +1,6 @@
-﻿namespace CleanAspCore.Api.Tests.Endpoints.Jobs;
+﻿using CleanAspCore.TestUtils.Fakers;
+
+namespace CleanAspCore.Api.Tests.Endpoints.Jobs;
 
 internal sealed class GetJobByIdTests(TestWebApi sut)
 {

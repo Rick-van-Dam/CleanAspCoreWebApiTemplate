@@ -1,4 +1,4 @@
-﻿using CleanAspCore.Data;
+﻿using CleanAspCore.Core.Data;
 using CleanAspCore.TestUtils.DataBaseSetup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

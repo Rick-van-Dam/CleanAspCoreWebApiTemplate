@@ -4,7 +4,7 @@ using CleanAspCore.Api.Common.ErrorHandling;
 using CleanAspCore.Core.Common.Identity;
 using CleanAspCore.Core.Common.OpenApi;
 using CleanAspCore.Core.Data;
-using CleanAspCore.Data;
+using CleanAspCore.Core.Data.Extensions;
 using CleanAspCore.ServiceDefaults;
 using Microsoft.AspNetCore.Routing.Constraints;
 

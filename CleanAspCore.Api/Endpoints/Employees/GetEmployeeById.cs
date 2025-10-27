@@ -1,5 +1,5 @@
-﻿using CleanAspCore.Core.Data.Models.Employees;
-using CleanAspCore.Data;
+﻿using CleanAspCore.Core.Data;
+using CleanAspCore.Core.Data.Models.Employees;
 
 namespace CleanAspCore.Api.Endpoints.Employees;
 

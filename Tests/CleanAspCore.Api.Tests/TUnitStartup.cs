@@ -1,5 +1,5 @@
 ﻿using CleanAspCore.Api.Tests;
-using CleanAspCore.Data;
+using CleanAspCore.Core.Data;
 using CleanAspCore.TestUtils.DataBaseSetup;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

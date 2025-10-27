@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace CleanAspCore.Data.Extensions;
+namespace CleanAspCore.Core.Data.Extensions;
 
 public static class HrContextExtensions
 {
