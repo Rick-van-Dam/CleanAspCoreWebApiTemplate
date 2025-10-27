@@ -3,7 +3,7 @@ using CleanAspCore.Api;
 using CleanAspCore.Api.Common.ErrorHandling;
 using CleanAspCore.Core;
 using CleanAspCore.Core.Common.OpenApi;
-using CleanAspCore.ServiceDefaults;
+using CleanAspCore.Core.Common.ServiceDefaults;
 using Microsoft.AspNetCore.Routing.Constraints;
 
 var builder = WebApplication.CreateSlimBuilder(args);
@@ -12,9 +12,7 @@ builder.Services.Configure<RouteOptions>(options => options.SetParameterPolicy<R
 builder.AddOpenApiServices<CleanAspCore.Api.Program>(AppJsonSerializerContext.Default);
 builder.AddAuthServices();
 builder.AddAppServices();
-builder.AddServiceDefaults();
 builder.AddExceptionHandlers();
-builder.Services.AddHttpClient();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true);
 builder.AddStandardAppServices();
 
