@@ -3,11 +3,13 @@
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Bogus"/>
-    <PackageReference Include="Testcontainers.MsSql"/>
-    <PackageReference Include="Respawn"/>
+    <PackageReference Include="AwesomeAssertions" />
+    <PackageReference Include="Bogus" />
+    <PackageReference Include="Testcontainers.MsSql" />
+    <PackageReference Include="Respawn" />
+    <PackageReference Include="xunit.v3.extensibility.core" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CleanAspCore.Core\CleanAspCore.Core.csproj"/>
+    <ProjectReference Include="..\..\CleanAspCore.Core\CleanAspCore.Core.csproj" />
   </ItemGroup>
 </Project>

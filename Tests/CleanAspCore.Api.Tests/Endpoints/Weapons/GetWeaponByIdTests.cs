@@ -1,45 +1,40 @@
 ﻿using CleanAspCore.Api.Endpoints.Weapons;
-using CleanAspCore.TestUtils.Fakers;
 
 namespace CleanAspCore.Api.Tests.Endpoints.Weapons;
 
-internal sealed class GetWeaponByIdTests(TestWebApi sut)
+public sealed class GetWeaponByIdTests(TestWebApiFixture testWebApiFixture) : ApiTestBase(testWebApiFixture)
 {
-    [Test]
+    [Fact]
     public async Task GetWeaponById_Sword_ReturnsExpectedWeapon()
     {
         //Arrange
         var weapon = new SwordFaker().Generate();
-        sut.SeedData(context =>
+        Sut.SeedData(context =>
         {
             context.Weapons.Add(weapon);
         });
 
         //Act
-        var response = await sut.CreateUntypedClientFor().GetFromJsonAsync<IWeaponResponse>($"weapons/{weapon.Id}");
+        var response = await Sut.CreateUntypedClientFor().GetFromJsonAsync<IWeaponResponse>($"weapons/{weapon.Id}", cancellationToken: TestContext.Current.CancellationToken);
 
         //Assert
-        await Assert.That(response)
-            .IsTypeOf<GetSwordResponse>()
-            .HasMember(x => x!.Id).EqualTo(weapon.Id);
+        response.Should().BeOfType<GetSwordResponse>().Which.Id.Should().Be(weapon.Id);
     }
 
-    [Test]
+    [Fact]
     public async Task GetWeaponById_Bow_ReturnsExpectedWeapon()
     {
         //Arrange
         var weapon = new BowFaker().Generate();
-        sut.SeedData(context =>
+        Sut.SeedData(context =>
         {
             context.Weapons.Add(weapon);
         });
 
         //Act
-        var response = await sut.CreateUntypedClientFor().GetFromJsonAsync<IWeaponResponse>($"weapons/{weapon.Id}");
+        var response = await Sut.CreateUntypedClientFor().GetFromJsonAsync<IWeaponResponse>($"weapons/{weapon.Id}", cancellationToken: TestContext.Current.CancellationToken);
 
         //Assert
-        await Assert.That(response)
-            .IsTypeOf<GetBowResponse>()
-            .HasMember(x => x!.Id).EqualTo(weapon.Id);
+        response.Should().BeOfType<GetBowResponse>().Which.Id.Should().Be(weapon.Id);
     }
 }

@@ -1,51 +1,44 @@
-using System.Text.Json;
 using CleanAspCore.Api.Endpoints.Weapons;
 using CleanAspCore.Api.Tests.Fakers;
 using CleanAspCore.Core.Data.Models.Weapons;
 
 namespace CleanAspCore.Api.Tests.Endpoints.Weapons;
 
-internal sealed class CreateWeaponTests(TestWebApi sut)
+public sealed class CreateWeaponTests(TestWebApiFixture testWebApiFixture) : ApiTestBase(testWebApiFixture)
 {
-    [Test]
+    [Fact]
     public async Task Create_Sword_IsAdded()
     {
         //Arrange
         var request = new CreateSwordRequestFaker().Generate();
 
         //Act
-        var response = await sut.CreateUntypedClientFor().PostAsJsonAsync<ICreateWeaponRequest>("/weapons", request);
+        var response = await Sut.CreateUntypedClientFor().PostAsJsonAsync<ICreateWeaponRequest>("/weapons", request, cancellationToken: TestContext.Current.CancellationToken);
 
         //Assert
-        await Assert.That(response).HasStatusCode(HttpStatusCode.Created);
+        await response.AssertStatusCode(HttpStatusCode.Created);
         var createdId = response.GetGuidFromLocationHeader();
-        await sut.AssertDatabase(async context =>
+        Sut.AssertDatabase(context =>
         {
-            await Assert.That(context.Weapons)
-                .HasCount().EqualTo(1).And
-                .Contains(x => x.Id == createdId).And
-                .Contains(x => x is Sword);
+            context.Weapons.Should().BeEquivalentTo([new { Id = createdId }]).And.AllBeOfType<Sword>();
         });
     }
 
-    [Test]
+    [Fact]
     public async Task Create_Bow_IsAdded()
     {
         //Arrange
         var request = new CreateBowRequestFaker().Generate();
 
         //Act
-        var response = await sut.CreateUntypedClientFor().PostAsJsonAsync<ICreateWeaponRequest>("/weapons", request);
+        var response = await Sut.CreateUntypedClientFor().PostAsJsonAsync<ICreateWeaponRequest>("/weapons", request, cancellationToken: TestContext.Current.CancellationToken);
 
         //Assert
-        await Assert.That(response).HasStatusCode(HttpStatusCode.Created);
+        await response.AssertStatusCode(HttpStatusCode.Created);
         var createdId = response.GetGuidFromLocationHeader();
-        await sut.AssertDatabase(async context =>
+        Sut.AssertDatabase(context =>
         {
-            await Assert.That(context.Weapons)
-                .HasCount().EqualTo(1).And
-                .Contains(x => x.Id == createdId).And
-                .Contains(x => x is Bow);
+            context.Weapons.Should().BeEquivalentTo([new { Id = createdId }]).And.AllBeOfType<Bow>();
         });
     }
 }

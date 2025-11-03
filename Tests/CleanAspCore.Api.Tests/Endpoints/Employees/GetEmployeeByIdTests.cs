@@ -1,37 +1,35 @@
-﻿using CleanAspCore.TestUtils.Fakers;
+﻿namespace CleanAspCore.Api.Tests.Endpoints.Employees;
 
-namespace CleanAspCore.Api.Tests.Endpoints.Employees;
-
-internal sealed class GetEmployeeByIdTests(TestWebApi sut)
+public sealed class GetEmployeeByIdTests(TestWebApiFixture testWebApiFixture) : ApiTestBase(testWebApiFixture)
 {
-    [Test]
+    [Fact]
     public async Task GetEmployeeById_ReturnsExpectedEmployee()
     {
         //Arrange
         var employee = new EmployeeFaker().Generate();
-        sut.SeedData(context =>
+        Sut.SeedData(context =>
         {
             context.Employees.Add(employee);
         });
 
         //Act
-        var response = await sut.CreateClientFor<IEmployeeApiClient>(ClaimConstants.ReadRole).GetEmployeeById(employee.Id);
+        var response = await Sut.CreateClientFor<IEmployeeApiClient>(ClaimConstants.ReadRole).GetEmployeeById(employee.Id);
 
         //Assert
-        await Assert.That(response).HasStatusCode(HttpStatusCode.OK);
-        await Assert.That(response).HasJsonBodyEquivalentTo(new { Id = employee.Id });
+        await response.AssertStatusCode(HttpStatusCode.OK);
+        await response.AssertJsonBodyIsEquivalentTo(new { Id = employee.Id });
     }
 
-    [Test]
+    [Fact]
     public async Task GetEmployeeById_DoesNotExist_ReturnsNotFound()
     {
         //Arrange
         var employee = new EmployeeFaker().Generate();
 
         //Act
-        var response = await sut.CreateClientFor<IEmployeeApiClient>(ClaimConstants.ReadRole).GetEmployeeById(employee.Id);
+        var response = await Sut.CreateClientFor<IEmployeeApiClient>(ClaimConstants.ReadRole).GetEmployeeById(employee.Id);
 
         //Assert
-        await Assert.That(response).HasStatusCode(HttpStatusCode.NotFound);
+        await response.AssertStatusCode(HttpStatusCode.NotFound);
     }
 }

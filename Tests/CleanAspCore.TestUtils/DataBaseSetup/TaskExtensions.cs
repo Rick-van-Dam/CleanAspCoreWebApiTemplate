@@ -1,6 +1,6 @@
 ﻿namespace CleanAspCore.TestUtils.DataBaseSetup;
 
-internal static class TaskExtensions
+public static class TaskExtensions
 {
     public static void RunSynchronouslyWithoutSynchronizationContext(this Task task)
     {

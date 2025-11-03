@@ -1,14 +1,12 @@
 ﻿using CleanAspCore.Core.Data;
 using CleanAspCore.TestUtils.DataBaseSetup;
+using CleanAspCore.TestUtils.Logging;
 using DotNet.Testcontainers.Containers;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Testcontainers.MsSql;
-using Xunit;
 
 namespace CleanAspCore.Api.Tests.Data;
 
-public sealed class MigrationTests(MsSqlContainer databaseContainer, ILogger<MigrationTests> logger)
+public sealed class MigrationTests(SqlContainerFixture sqlContainerFixture, ITestOutputHelper output)
 {
     public static TheoryData<MigrationScript> MigrationTestCases()
     {
@@ -21,8 +19,8 @@ public sealed class MigrationTests(MsSqlContainer databaseContainer, ILogger<Mig
     public async Task MigrationsUpAndDown_NoErrors(MigrationScript migration)
     {
         var databaseName = "MigrationsTest";
-        await databaseContainer.CreateDatabase(databaseName);
-        var migrator = new SqlMigrator(databaseContainer, logger, databaseName);
+        await sqlContainerFixture.Container.CreateDatabase(databaseName);
+        var migrator = new SqlMigrator(sqlContainerFixture.Container, new XunitLogger(output), databaseName);
         var upResult = await migrator.Up(migration);
         AssertMigrationResult(upResult);
         var downResult = await migrator.Down(migration);

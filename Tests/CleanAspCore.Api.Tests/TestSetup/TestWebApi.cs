@@ -71,11 +71,11 @@ public sealed class TestWebApi(DatabasePool databasePool) : WebApplicationFactor
         context.SaveChanges();
     }
 
-    public Task AssertDatabase(Func<HrContext, Task> seedAction)
+    public void AssertDatabase(Action<HrContext> seedAction)
     {
         using var scope = Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<HrContext>();
-        return seedAction(context);
+        seedAction(context);
     }
 
     public HttpClient CreateUntypedClientFor(params Claim[] claims)

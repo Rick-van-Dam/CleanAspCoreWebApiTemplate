@@ -2,48 +2,46 @@
 
 namespace CleanAspCore.Api.Tests.Endpoints.Departments;
 
-internal sealed class AddDepartmentsTests(TestWebApi sut)
+public sealed class AddDepartmentsTests(TestWebApiFixture testWebApiFixture) : ApiTestBase(testWebApiFixture)
 {
-    [Test]
+    [Fact]
     public async Task CreateDepartment_IsAdded()
     {
         //Arrange
         var department = new CreateDepartmentRequestFaker().Generate();
 
         //Act
-        var response = await sut.CreateClientFor<IDepartmentApiClient>().CreateDepartment(department);
+        var response = await Sut.CreateClientFor<IDepartmentApiClient>().CreateDepartment(department);
 
         //Assert
-        await Assert.That(response).HasStatusCode(HttpStatusCode.Created);
+        await response.AssertStatusCode(HttpStatusCode.Created);
 
         var createdId = response.GetGuidFromLocationHeader();
-        await sut.AssertDatabase(async context =>
+        Sut.AssertDatabase(context =>
         {
-            await Assert.That(context.Departments)
-                .HasCount().EqualTo(1).And
-                .Contains(x => x.Id == createdId);
+            context.Departments.Should().BeEquivalentTo([new { Id = createdId }]);
         });
     }
 
-    [Test]
+    [Fact]
     public async Task CreateDepartment_MissingProperties_ReturnsBadRequestWithDetails()
     {
         //Act
-        var response = await sut.CreateUntypedClientFor().PostAsJsonAsync("departments", new { });
+        var response = await Sut.CreateUntypedClientFor().PostAsJsonAsync("departments", new { }, cancellationToken: TestContext.Current.CancellationToken);
 
         //Assert
-        await Assert.That(response).HasBadRequest("name", "city");
+        await response.AssertBadRequest("name", "city");
     }
 
-    [Test]
+    [Fact]
     public async Task CreateDepartment_InvalidJson_ReturnsBadRequestWithDetails()
     {
         //Act
-        var response = await sut.CreateUntypedClientFor().PostAsJsonAsync("departments", "{/}");
+        var response = await Sut.CreateUntypedClientFor().PostAsJsonAsync("departments", "{/}", cancellationToken: TestContext.Current.CancellationToken);
 
         //Assert
-        await Assert.That(response).HasBadRequest();
-        var responseText = await response.Content.ReadAsStringAsync();
-        await Assert.That(responseText).Contains("The JSON value could not be converted to");
+        await response.AssertBadRequest();
+        var responseText = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
+        responseText.Should().Contain("The JSON value could not be converted to");
     }
 }
