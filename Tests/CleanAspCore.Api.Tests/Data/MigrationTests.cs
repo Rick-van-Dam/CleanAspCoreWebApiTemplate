@@ -8,7 +8,7 @@ using Testcontainers.MsSql;
 
 namespace CleanAspCore.Api.Tests.Data;
 
-public sealed class MigrationTests(TestWebApiFixture testWebApiFixture, ITestOutputHelper output)
+public sealed class MigrationTests(TestWebApiFixture testWebApiFixture)
 {
     public static TheoryData<MigrationScript> MigrationTestCases()
     {
