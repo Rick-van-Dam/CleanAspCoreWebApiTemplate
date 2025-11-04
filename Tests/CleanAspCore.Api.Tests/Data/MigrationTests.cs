@@ -24,7 +24,7 @@ public sealed class MigrationTests(TestWebApiFixture testWebApiFixture, ITestOut
         var container = scope.ServiceProvider.GetRequiredService<MsSqlContainer>();
         var databaseName = "MigrationsTest";
         await container.CreateDatabase(databaseName);
-        var migrator = new SqlMigrator(container, new XunitLogger(output), databaseName);
+        var migrator = new SqlMigrator(container, new XunitLogger("MigrationTests", output), databaseName);
         var upResult = await migrator.Up(migration);
         AssertMigrationResult(upResult);
         var downResult = await migrator.Down(migration);
@@ -35,7 +35,9 @@ public sealed class MigrationTests(TestWebApiFixture testWebApiFixture, ITestOut
 
     private static void AssertMigrationResult(ExecResult result)
     {
-        Assert.True(result.ExitCode == 0, $"Error during migration: {result.Stderr}");
+        using var s = new AssertionScope();
+        result.ExitCode.Should().Be(0);
+        s.AppendTracing(result.Stderr);
     }
 
     [Fact]
