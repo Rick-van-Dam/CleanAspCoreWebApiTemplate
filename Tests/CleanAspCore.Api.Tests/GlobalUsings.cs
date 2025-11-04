@@ -1,7 +1,10 @@
 global using System.Diagnostics.CodeAnalysis;
 global using System.Net;
 global using System.Net.Http.Json;
+global using AwesomeAssertions;
+global using AwesomeAssertions.Execution;
 global using CleanAspCore.Api.Tests.TestSetup;
-global using TUnit.Assertions;
-global using TUnit.Assertions.Extensions;
-global using TUnit.Core;
+global using CleanAspCore.Api.Tests.TestSetup.Fixtures;
+global using CleanAspCore.TestUtils.Assertions;
+global using CleanAspCore.TestUtils.Fakers;
+global using Xunit;

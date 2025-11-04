@@ -1,26 +1,24 @@
 ﻿namespace CleanAspCore.Api.Tests.Endpoints;
 
-public class HealthCheckTests(TestWebApi sut)
+public class HealthCheckTests(TestWebApiFixture testWebApiFixture) : ApiTestBase(testWebApiFixture)
 {
-    [Test]
+    [Fact]
     public async Task GetHealth_Returns200()
     {
         //Act
-        var response = await sut.CreateUntypedClientFor().GetAsync("/health");
+        var response = await Sut.CreateUntypedClientFor().GetAsync("/health", TestContext.Current.CancellationToken);
 
         //Assert
-        await Assert.That(response)
-            .HasStatusCode(HttpStatusCode.OK);
+        await response.AssertStatusCode(HttpStatusCode.OK);
     }
 
-    [Test]
+    [Fact]
     public async Task GetAlive_Returns200()
     {
         //Act
-        var response = await sut.CreateUntypedClientFor().GetAsync("/alive");
+        var response = await Sut.CreateUntypedClientFor().GetAsync("/alive", TestContext.Current.CancellationToken);
 
         //Assert
-        await Assert.That(response)
-            .HasStatusCode(HttpStatusCode.OK);
+        await response.AssertStatusCode(HttpStatusCode.OK);
     }
 }

@@ -1,18 +1,16 @@
-﻿using CleanAspCore.TestUtils.Fakers;
+﻿namespace CleanAspCore.Api.Tests.Endpoints.Employees;
 
-namespace CleanAspCore.Api.Tests.Endpoints.Employees;
-
-internal sealed class GetEmployees(TestWebApi sut)
+public sealed class GetEmployees(TestWebApiFixture testWebApiFixture) : ApiTestBase(testWebApiFixture)
 {
-    [Test]
+    [Fact]
     public async Task? GetEmployees_NoEmployees_ReturnsEmptyPage()
     {
         //Act
-        var response = await sut.CreateClientFor<IEmployeeApiClient>(ClaimConstants.ReadRole).GetEmployees(1, 10);
+        var response = await Sut.CreateClientFor<IEmployeeApiClient>(ClaimConstants.ReadRole).GetEmployees(1, 10);
 
         //Assert
-        await Assert.That(response).HasStatusCode(HttpStatusCode.OK);
-        await Assert.That(response).HasJsonBodyEquivalentTo(new
+        await response.AssertStatusCode(HttpStatusCode.OK);
+        await response.AssertJsonBodyIsEquivalentTo(new
         {
             TotalPages = 0,
             TotalRecords = 0,
@@ -21,7 +19,7 @@ internal sealed class GetEmployees(TestWebApi sut)
         });
     }
 
-    [Test]
+    [Fact]
     public async Task GetEmployees_FirstPage_ReturnsExpectedEmployees()
     {
         //Arrange
@@ -31,17 +29,17 @@ internal sealed class GetEmployees(TestWebApi sut)
             .RuleFor(x => x.Department, department)
             .RuleFor(x => x.Job, job)
             .Generate(15);
-        sut.SeedData(context =>
+        Sut.SeedData(context =>
         {
             context.Employees.AddRange(employees);
         });
 
         //Act
-        var response = await sut.CreateClientFor<IEmployeeApiClient>(ClaimConstants.ReadRole).GetEmployees(1, 10);
+        var response = await Sut.CreateClientFor<IEmployeeApiClient>(ClaimConstants.ReadRole).GetEmployees(1, 10);
 
         //Assert
-        await Assert.That(response).HasStatusCode(HttpStatusCode.OK);
-        await Assert.That(response).HasJsonBodyEquivalentTo(new
+        await response.AssertStatusCode(HttpStatusCode.OK);
+        await response.AssertJsonBodyIsEquivalentTo(new
         {
             TotalPages = 2,
             TotalRecords = 15,
@@ -54,7 +52,7 @@ internal sealed class GetEmployees(TestWebApi sut)
         });
     }
 
-    [Test]
+    [Fact]
     public async Task GetEmployees_SecondPage_ReturnsExpectedEmployees()
     {
         //Arrange
@@ -64,17 +62,17 @@ internal sealed class GetEmployees(TestWebApi sut)
             .RuleFor(x => x.Department, department)
             .RuleFor(x => x.Job, job)
             .Generate(15);
-        sut.SeedData(context =>
+        Sut.SeedData(context =>
         {
             context.Employees.AddRange(employees);
         });
 
         //Act
-        var response = await sut.CreateClientFor<IEmployeeApiClient>(ClaimConstants.ReadRole).GetEmployees(2, 10);
+        var response = await Sut.CreateClientFor<IEmployeeApiClient>(ClaimConstants.ReadRole).GetEmployees(2, 10);
 
         //Assert
-        await Assert.That(response).HasStatusCode(HttpStatusCode.OK);
-        await Assert.That(response).HasJsonBodyEquivalentTo(new
+        await response.AssertStatusCode(HttpStatusCode.OK);
+        await response.AssertJsonBodyIsEquivalentTo(new
         {
             TotalPages = 2,
             TotalRecords = 15,
