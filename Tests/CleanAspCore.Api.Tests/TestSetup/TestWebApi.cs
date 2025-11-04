@@ -45,7 +45,7 @@ public sealed class TestWebApi(DatabasePool databasePool) : WebApplicationFactor
         builder.ConfigureLogging(loggingBuilder =>
         {
             loggingBuilder.ClearProviders();
-            loggingBuilder.AddXUnit(TestContext.Current.TestOutputHelper!);
+            loggingBuilder.AddConsole();
         });
 
         var app = base.CreateHost(builder);

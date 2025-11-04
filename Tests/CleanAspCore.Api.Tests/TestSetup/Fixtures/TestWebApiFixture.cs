@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 [assembly: AssemblyFixture(typeof(TestWebApiFixture))]
+[assembly: CaptureConsole]
 
 namespace CleanAspCore.Api.Tests.TestSetup.Fixtures;
 
