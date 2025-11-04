@@ -1,7 +1,7 @@
 ﻿using CleanAspCore.Core.Data;
 using CleanAspCore.TestUtils.DataBaseSetup;
-using CleanAspCore.TestUtils.Logging;
 using DotNet.Testcontainers.Containers;
+using MartinCostello.Logging.XUnit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.MsSql;
@@ -24,7 +24,7 @@ public sealed class MigrationTests(TestWebApiFixture testWebApiFixture, ITestOut
         var container = scope.ServiceProvider.GetRequiredService<MsSqlContainer>();
         var databaseName = "MigrationsTest";
         await container.CreateDatabase(databaseName);
-        var migrator = new SqlMigrator(container, new XunitLogger("MigrationTests", output), databaseName);
+        var migrator = new SqlMigrator(container, new XUnitLogger("MigrationTests", output, null), databaseName);
         var upResult = await migrator.Up(migration);
         AssertMigrationResult(upResult);
         var downResult = await migrator.Down(migration);

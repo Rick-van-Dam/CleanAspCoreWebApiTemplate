@@ -3,10 +3,8 @@ using System.Security.Claims;
 using CleanAspCore.Core.Data;
 using CleanAspCore.TestUtils.DataBaseSetup;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web;
@@ -27,6 +25,7 @@ public sealed class TestWebApi(DatabasePool databasePool) : WebApplicationFactor
             {
                 { $"ConnectionStrings:{HrContext.ConnectionStringName}", _pooledDatabase.ConnectionString },
                 { "Logging:LogLevel:Microsoft.AspNetCore.Routing", "Information" },
+                { "Logging:LogLevel:Microsoft.EntityFrameworkCore.Database.Command", "Information" },
                 { "Logging:LogLevel:Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager", "Warning" },
                 { "Logging:LogLevel:Microsoft.EntityFrameworkCore.Model.Validation", "Error" },
                 { "DisableTelemetry", "true" },
@@ -37,8 +36,7 @@ public sealed class TestWebApi(DatabasePool databasePool) : WebApplicationFactor
 
         builder.ConfigureServices(services =>
         {
-            services.RemoveAll<DbContextOptions<HrContext>>();
-            services.AddDbContext<HrContext>(c => c
+            services.ConfigureDbContext<HrContext>(c => c
                 .EnableSensitiveDataLogging()
                 .EnableDetailedErrors());
             services.ConfigureTestJwt(Constants.AzureAd);
@@ -47,7 +45,7 @@ public sealed class TestWebApi(DatabasePool databasePool) : WebApplicationFactor
         builder.ConfigureLogging(loggingBuilder =>
         {
             loggingBuilder.ClearProviders();
-            loggingBuilder.AddConsole();
+            loggingBuilder.AddXUnit(TestContext.Current.TestOutputHelper!);
         });
 
         var app = base.CreateHost(builder);

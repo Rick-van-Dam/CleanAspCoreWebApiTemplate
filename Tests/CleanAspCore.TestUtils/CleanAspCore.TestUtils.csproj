@@ -8,6 +8,7 @@
     <PackageReference Include="Testcontainers.MsSql" />
     <PackageReference Include="Respawn" />
     <PackageReference Include="xunit.v3.extensibility.core" />
+    <PackageReference Include="MartinCostello.Logging.XUnit.v3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CleanAspCore.Core\CleanAspCore.Core.csproj" />
