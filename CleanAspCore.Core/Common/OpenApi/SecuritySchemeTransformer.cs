@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.OpenApi;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
-using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Interfaces;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace CleanAspCore.Core.Common.OpenApi;
 
@@ -16,9 +14,9 @@ internal sealed class SecuritySchemeTransformer(IConfiguration configuration, IW
     {
         var config = configuration.GetRequiredSection(Constants.AzureAd).Get<MicrosoftIdentityOptions>()!;
 
-        var requirements = new Dictionary<string, OpenApiSecurityScheme>
+        var requirements = new Dictionary<string, IOpenApiSecurityScheme>
         {
-            ["AzureAd"] = new()
+            ["AzureAd"] = new OpenApiSecurityScheme
             {
                 Type = SecuritySchemeType.OAuth2,
                 Scheme = "bearer", // "bearer" refers to the header name here
@@ -34,7 +32,7 @@ internal sealed class SecuritySchemeTransformer(IConfiguration configuration, IW
                         {
                             { $"api://{config.ClientId}/default", "read" },
                         },
-                        Extensions = new Dictionary<string, IOpenApiExtension> { { "x-usePkce", new OpenApiString("SHA-256") } },
+                        Extensions = new Dictionary<string, IOpenApiExtension> { ["x-usePkce"] = new JsonNodeExtension("SHA-256") },
                     }
                 }
             }
@@ -42,7 +40,7 @@ internal sealed class SecuritySchemeTransformer(IConfiguration configuration, IW
 
         if (environment.IsDevelopment())
         {
-            requirements.Add(JwtBearerDefaults.AuthenticationScheme, new()
+            requirements.Add(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
             {
                 Type = SecuritySchemeType.Http,
                 Scheme = "bearer", // "bearer" refers to the header name here
@@ -54,20 +52,20 @@ internal sealed class SecuritySchemeTransformer(IConfiguration configuration, IW
         document.Components ??= new OpenApiComponents();
         document.Components.SecuritySchemes = requirements;
 
-        foreach (var operation in document.Paths.Values.SelectMany(path => path.Operations))
+        /*foreach (var operation in document.Paths.Values.SelectMany(path => path.Operations))
         {
             operation.Value.Security.Add(new OpenApiSecurityRequirement
             {
-                [new OpenApiSecurityScheme
+                [new OpenApiSecuritySchemeReference()
                 {
-                    Reference = new OpenApiReference
+                    Reference = new OpenApiReferenceWithDescription
                     {
                         Id = "AzureAd",
                         Type = ReferenceType.SecurityScheme
                     },
                 }] = []
             });
-        }
+        }*/
 
         return Task.CompletedTask;
     }
