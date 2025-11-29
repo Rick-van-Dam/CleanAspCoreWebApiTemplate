@@ -62,15 +62,13 @@ internal static class UpdateEmployeeById
     {
         var changed = await context.Employees
             .Where(x => x.Id == id)
-            .ExecuteUpdateAsync(s =>
-            {
-                s.SetPropertyIfNotNull(x => x.FirstName, updateEmployeeRequest.FirstName)
-                    .SetPropertyIfNotNull(x => x.LastName, updateEmployeeRequest.LastName)
-                    .SetPropertyIfNotNull(x => x.Email, updateEmployeeRequest.Email)
-                    .SetPropertyIfNotNull(x => x.Gender, updateEmployeeRequest.Gender)
-                    .SetPropertyIfNotNull(x => x.DepartmentId, updateEmployeeRequest.DepartmentId)
-                    .SetPropertyIfNotNull(x => x.JobId, updateEmployeeRequest.JobId);
-            }, cancellationToken);
+            .ExecuteUpdateAsync(s => s
+                .SetPropertyIfNotNull(x => x.FirstName, updateEmployeeRequest.FirstName)
+                .SetPropertyIfNotNull(x => x.LastName, updateEmployeeRequest.LastName)
+                .SetPropertyIfNotNull(x => x.Email, updateEmployeeRequest.Email)
+                .SetPropertyIfNotNull(x => x.Gender, updateEmployeeRequest.Gender)
+                .SetPropertyIfNotNull(x => x.DepartmentId, updateEmployeeRequest.DepartmentId)
+                .SetPropertyIfNotNull(x => x.JobId, updateEmployeeRequest.JobId), cancellationToken);
 
         return changed switch
         {
