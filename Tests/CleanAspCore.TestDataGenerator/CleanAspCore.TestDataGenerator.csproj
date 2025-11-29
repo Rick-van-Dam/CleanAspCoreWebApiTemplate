@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CleanAspCore.TestUtils\CleanAspCore.TestUtils.csproj"/>
+    <ProjectReference Include="..\CleanAspCore.TestUtils\CleanAspCore.TestUtils.csproj" />
   </ItemGroup>
 
 </Project>

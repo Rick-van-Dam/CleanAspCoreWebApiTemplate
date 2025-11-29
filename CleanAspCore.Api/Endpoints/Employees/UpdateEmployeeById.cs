@@ -60,17 +60,15 @@ internal static class UpdateEmployeeById
     internal static async Task<Results<NoContent, NotFound>> Handle(
         Guid id, [FromBody] UpdateEmployeeRequest updateEmployeeRequest, HrContext context, CancellationToken cancellationToken)
     {
-        var builder = new SetPropertyBuilder<Employee>()
-            .SetPropertyIfNotNull(x => x.FirstName, updateEmployeeRequest.FirstName)
-            .SetPropertyIfNotNull(x => x.LastName, updateEmployeeRequest.LastName)
-            .SetPropertyIfNotNull(x => x.Email, updateEmployeeRequest.Email)
-            .SetPropertyIfNotNull(x => x.Gender, updateEmployeeRequest.Gender)
-            .SetPropertyIfNotNull(x => x.DepartmentId, updateEmployeeRequest.DepartmentId)
-            .SetPropertyIfNotNull(x => x.JobId, updateEmployeeRequest.JobId);
-
         var changed = await context.Employees
             .Where(x => x.Id == id)
-            .ExecuteUpdateAsync(builder.SetPropertyCalls, cancellationToken);
+            .ExecuteUpdateAsync(s => s
+                .SetPropertyIfNotNull(x => x.FirstName, updateEmployeeRequest.FirstName)
+                .SetPropertyIfNotNull(x => x.LastName, updateEmployeeRequest.LastName)
+                .SetPropertyIfNotNull(x => x.Email, updateEmployeeRequest.Email)
+                .SetPropertyIfNotNull(x => x.Gender, updateEmployeeRequest.Gender)
+                .SetPropertyIfNotNull(x => x.DepartmentId, updateEmployeeRequest.DepartmentId)
+                .SetPropertyIfNotNull(x => x.JobId, updateEmployeeRequest.JobId), cancellationToken);
 
         return changed switch
         {
