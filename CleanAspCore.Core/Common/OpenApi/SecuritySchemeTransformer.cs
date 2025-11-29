@@ -49,23 +49,7 @@ internal sealed class SecuritySchemeTransformer(IConfiguration configuration, IW
             });
         }
 
-        document.Components ??= new OpenApiComponents();
-        document.Components.SecuritySchemes = requirements;
-
-        /*foreach (var operation in document.Paths.Values.SelectMany(path => path.Operations))
-        {
-            operation.Value.Security.Add(new OpenApiSecurityRequirement
-            {
-                [new OpenApiSecuritySchemeReference()
-                {
-                    Reference = new OpenApiReferenceWithDescription
-                    {
-                        Id = "AzureAd",
-                        Type = ReferenceType.SecurityScheme
-                    },
-                }] = []
-            });
-        }*/
+        document.Components!.SecuritySchemes = requirements;
 
         return Task.CompletedTask;
     }
