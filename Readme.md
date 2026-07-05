@@ -14,6 +14,17 @@ Some features in this template:
 - Automated build using github actions that checks code formatting, builds and runs the tests.
 - .NET Aspire
 
+## Copilot guidance in this repository
+
+To improve Copilot output quality and reduce broad inference, this repository now includes:
+
+- Repository-wide instructions: `.github/copilot-instructions.md`
+- Path-specific instructions: `.github/instructions/*.instructions.md`
+- Reusable prompt templates (skills): `.github/prompts/*.prompt.md`
+- Agent guidance: `AGENTS.md`
+
+Keep these files concise and high-signal. If suggestions become noisy or slow, trim or simplify these instructions.
+
 ## Running tests
 
 Only docker is required to run the tests (Tip: podman is free to use). First run can take a bit longer as the docker image is downloaded.
