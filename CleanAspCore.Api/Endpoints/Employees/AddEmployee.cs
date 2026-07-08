@@ -26,7 +26,7 @@ public sealed class CreateEmployeeRequest
     /// <summary>
     /// The email of this employee.
     /// </summary>
-    public required string Email { get; init; }
+    public required EmailAddress Email { get; init; }
 
     /// <summary>
     /// The gender of this employee.
@@ -51,7 +51,6 @@ internal sealed class CreateEmployeeRequestValidator : AbstractValidator<CreateE
     {
         this.ValidateNullableReferences();
 
-        RuleFor(x => x.Email).EmailAddress();
         RuleFor(x => x.JobId).EntityShouldExist(context.Jobs);
         RuleFor(x => x.DepartmentId).EntityShouldExist(context.Departments);
     }
@@ -75,7 +74,7 @@ internal static class AddEmployee
         Id = Guid.NewGuid(),
         FirstName = employee.FirstName,
         LastName = employee.LastName,
-        Email = new EmailAddress(employee.Email),
+        Email = employee.Email,
         Gender = employee.Gender,
         DepartmentId = employee.DepartmentId,
         JobId = employee.JobId

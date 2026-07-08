@@ -20,7 +20,7 @@ internal static class GetEmployees
         Id = employee.Id,
         FirstName = employee.FirstName,
         LastName = employee.LastName,
-        Email = employee.Email.ToString(),
+        Email = employee.Email,
         Gender = employee.Gender,
         DepartmentId = employee.DepartmentId,
         JobId = employee.JobId

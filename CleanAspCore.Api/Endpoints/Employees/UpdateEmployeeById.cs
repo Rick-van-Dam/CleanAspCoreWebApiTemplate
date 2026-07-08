@@ -1,5 +1,6 @@
 ﻿using CleanAspCore.Core.Common.NullableValidation;
 using CleanAspCore.Core.Common.SetProperty;
+using CleanAspCore.Core.Common.ValueObjects;
 using CleanAspCore.Core.Data;
 using CleanAspCore.Core.Data.Models.Employees;
 using NotFound = Microsoft.AspNetCore.Http.HttpResults.NotFound;
@@ -26,7 +27,7 @@ public sealed class UpdateEmployeeRequest
     /// <summary>
     /// The email of this employee.
     /// </summary>
-    public string? Email { get; init; }
+    public EmailAddress? Email { get; init; }
 
     /// <summary>
     /// The gender of this employee.
@@ -40,7 +41,7 @@ public sealed class UpdateEmployeeRequest
     public Guid? DepartmentId { get; init; }
 
     /// <summary>
-    /// The job id of this employee.
+    /// The job id of which this employee is in.
     /// </summary>
     public Guid? JobId { get; init; }
 }
@@ -50,8 +51,6 @@ internal sealed class UpdateEmployeeRequestValidator : AbstractValidator<UpdateE
     public UpdateEmployeeRequestValidator()
     {
         this.ValidateNullableReferences();
-
-        RuleFor(x => x.Email).EmailAddress();
     }
 }
 

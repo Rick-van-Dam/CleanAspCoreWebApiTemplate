@@ -1,7 +1,9 @@
-﻿using FluentValidation;
+﻿using System.Text.Json.Serialization;
+using FluentValidation;
 
 namespace CleanAspCore.Core.Common.ValueObjects;
 
+[JsonConverter(typeof(EmailAddressJsonConverter))]
 public readonly record struct EmailAddress
 {
     public string Email { get; }
