@@ -4,6 +4,7 @@ using CleanAspCore.Api.Common.ErrorHandling;
 using CleanAspCore.Core;
 using CleanAspCore.Core.Common.OpenApi;
 using CleanAspCore.Core.Common.ServiceDefaults;
+using CleanAspCore.Core.Common.ValueObjects;
 using Microsoft.AspNetCore.Routing.Constraints;
 
 var builder = WebApplication.CreateSlimBuilder(args);
@@ -19,6 +20,7 @@ builder.AddStandardAppServices();
 builder.Configuration.AddJsonFile("appsettings.Local.json", true);
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
+    options.SerializerOptions.Converters.Add(new EmailAddressJsonConverter());
     options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
 });
 var app = builder.Build();

@@ -1,4 +1,5 @@
-﻿using CleanAspCore.Core.Data;
+﻿using CleanAspCore.Core.Common.ValueObjects;
+using CleanAspCore.Core.Data;
 using CleanAspCore.Core.Data.Models.Employees;
 
 namespace CleanAspCore.Api.Endpoints.Employees;
@@ -28,7 +29,7 @@ public sealed class GetEmployeeResponse
     /// <summary>
     /// The email of this employee.
     /// </summary>
-    public required string Email { get; init; }
+    public required EmailAddress Email { get; init; }
 
     /// <summary>
     /// The gender of this employee.
@@ -69,7 +70,7 @@ internal static class GetEmployeeById
         Id = employee.Id,
         FirstName = employee.FirstName,
         LastName = employee.LastName,
-        Email = employee.Email.ToString(),
+        Email = employee.Email,
         Gender = employee.Gender,
         DepartmentId = employee.DepartmentId,
         JobId = employee.JobId
