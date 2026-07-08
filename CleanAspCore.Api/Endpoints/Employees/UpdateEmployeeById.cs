@@ -41,7 +41,7 @@ public sealed class UpdateEmployeeRequest
     public Guid? DepartmentId { get; init; }
 
     /// <summary>
-    /// The job id of which this employee is in.
+    /// The job id for this employee.
     /// </summary>
     public Guid? JobId { get; init; }
 }

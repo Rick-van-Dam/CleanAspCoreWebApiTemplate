@@ -79,7 +79,9 @@ internal sealed partial class GlobalExceptionHandler : IExceptionHandler
         if (name.Length == 0)
             return name;
 
-        return char.ToUpperInvariant(name[0]) + name[1..];
+        return name.Length == 1
+            ? char.ToUpperInvariant(name[0]).ToString()
+            : char.ToUpperInvariant(name[0]) + name[1..];
     }
 
     [GeneratedRegex("JSON deserialization for type '.*' was missing required properties including: (?<Missing>.*)\\.")]
