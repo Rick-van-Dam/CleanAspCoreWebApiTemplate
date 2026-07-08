@@ -10,9 +10,10 @@ public sealed class EmailAddressJsonConverter : JsonConverter<EmailAddress>
 
     public override EmailAddress Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
+        var email = reader.TokenType == JsonTokenType.Null ? null : reader.GetString();
         try
         {
-            return new EmailAddress(reader.GetString()!);
+            return new EmailAddress(email!);
         }
         catch (ValidationException ex)
         {

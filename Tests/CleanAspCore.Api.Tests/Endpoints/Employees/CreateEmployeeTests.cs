@@ -56,7 +56,7 @@ public sealed class CreateEmployeeTests(TestWebApiFixture testWebApiFixture) : A
             "FirstName is null", (x => x.RuleFor(y => y.FirstName, (string?)null), ["FirstName"])), new TestScenario<(FakerConfigurator<CreateEmployeeRequest>, string[])>(
             "LastName is null", (x => x.RuleFor(y => y.LastName, (string?)null), ["LastName"])), new TestScenario<(FakerConfigurator<CreateEmployeeRequest>, string[])>(
             "Gender is null", (x => x.RuleFor(y => y.Gender, (string?)null), ["Gender"])), new TestScenario<(FakerConfigurator<CreateEmployeeRequest>, string[])>(
-            "Email is null", (x => x.RuleFor(y => y.Email, f => default(EmailAddress)), ["Email"])), new TestScenario<(FakerConfigurator<CreateEmployeeRequest>, string[])>(
+            "Email is null", (x => x.RuleFor(y => y.Email, f => default(EmailAddress)), ["Email"])), new TestScenario<(FakerConfigurator<CreateEmployeeRequest>, string[])>( // Invalid email format is tested separately in CreateEmployee_InvalidEmail_ReturnsBadRequest
             "Job does not exist", (x => x.RuleFor(y => y.JobId, Guid.NewGuid()), ["JobId"])), new TestScenario<(FakerConfigurator<CreateEmployeeRequest>, string[])>(
             "Department does not exist", (x => x.RuleFor(y => y.DepartmentId, Guid.NewGuid()), ["DepartmentId"])));
 
